@@ -11,26 +11,27 @@ class App extends Component {
     filter: '',
   };
 
-  contacts = 'contacts';
+  keyWord = 'contacts';
 
   componentDidMount() {
-    if (localStorage.getItem(this.contacts) != null) {
-      const temp = JSON.parse(localStorage.getItem(this.contacts));
+    const temp = JSON.parse(localStorage.getItem(this.contacts));
+    if (temp != null) {
       this.setState(() => ({
         contacts: [...temp],
       }));
     }
   }
 
-  componentDidUpdate() {
-    localStorage.setItem(this.contacts, JSON.stringify(this.state.contacts));
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem(this.keyWord, JSON.stringify(this.state.contacts));
+    }
   }
 
   addContact = ({ name: newName, number }) => {
+    const { contacts } = this.state;
     if (
-      this.state.contacts.some(
-        ({ name }) => name.toLowerCase() === newName.toLowerCase()
-      )
+      contacts.some(({ name }) => name.toLowerCase() === newName.toLowerCase())
     ) {
       alert(`${newName} is already in contacts`);
       return;
