@@ -11,10 +11,11 @@ class App extends Component {
     filter: '',
   };
 
-  keyWord = 'contacts';
+  KEY_WORD = 'contacts';
 
   componentDidMount() {
-    const temp = JSON.parse(localStorage.getItem(this.contacts));
+    const temp = JSON.parse(localStorage.getItem(this.KEY_WORD));
+    console.log(temp);
     if (temp != null) {
       this.setState(() => ({
         contacts: [...temp],
@@ -24,7 +25,7 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem(this.keyWord, JSON.stringify(this.state.contacts));
+      localStorage.setItem(this.KEY_WORD, JSON.stringify(this.state.contacts));
     }
   }
 
@@ -68,12 +69,13 @@ class App extends Component {
   };
 
   render() {
+    const { contacts } = this.state;
     return (
       <>
         <Section title="Phonebook">
           <ContactForm addContact={this.addContact} />
         </Section>
-        {this.state.contacts.length > 0 && (
+        {contacts.length > 0 && (
           <Section title="Contacts">
             <Filter filter={this.addFilter} />
             <ContactList
