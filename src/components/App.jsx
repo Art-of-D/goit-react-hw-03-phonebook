@@ -15,7 +15,6 @@ class App extends Component {
 
   componentDidMount() {
     const temp = JSON.parse(localStorage.getItem(this.KEY_WORD));
-    console.log(temp);
     if (temp != null) {
       this.setState(() => ({
         contacts: [...temp],
